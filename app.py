@@ -21,7 +21,8 @@ def player_details():
     if response.status_code == 200:
         data = response.json()
 
-        details = data.get('details', {})
+        player = data.get('player', {})
+        details = player.get('details', {})
 
         # Return ONLY name and powerLevel clearly:
         filtered_details = {
