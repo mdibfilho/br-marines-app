@@ -23,7 +23,13 @@ def player_details():
 
         details = data.get('details', {})
 
-        return jsonify(details)
+        # Return ONLY name and powerLevel clearly:
+        filtered_details = {
+            "name": details.get('name'),
+            "powerLevel": details.get('powerLevel')
+        }
+
+        return jsonify(filtered_details)
     else:
         return jsonify({"error": response.status_code, "details": response.text}), response.status_code
 
