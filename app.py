@@ -21,7 +21,7 @@ def player_details():
     if response.status_code == 200:
         data = response.json()
 
-        detais = data.get('details', {})
+        details = data.get('details', {})
 
         return jsonify(details)
     else:
