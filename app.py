@@ -22,7 +22,7 @@ def tactic_api():
 
 @app.route('/api/player/<player_id>')
 def player_details(player_id):
-    api_url = f'https://api.tacticusgame.com/players/{player_id}'
+    api_url = f'https://api.tacticusgame.com/api/v1/player/{player_id}'
     headers = {
         'Authorization': f"Bearer {os.environ.get('WARHAMMER_API_KEY')}"
     }
