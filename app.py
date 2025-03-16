@@ -19,7 +19,11 @@ def player_details():
     response = requests.get(api_url, headers=headers)
 
     if response.status_code == 200:
-        return jsonify(response.json())
+        data = response.json()
+
+        detais = data.get('details', {})
+
+        return jsonify(details)
     else:
         return jsonify({"error": response.status_code, "details": response.text}), response.status_code
 
