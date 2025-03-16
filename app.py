@@ -11,7 +11,7 @@ def home():
 @app.route('/api')
 def tactic_api():
     api_url = 'https://api.tacticusgame.com/api/v1/player'
-    headers = {'Authorization': f"Bearer {os.environ.get('50aaf9c9-5d94-4036-89af-5f8b99c67161')}"}
+    headers = {'Authorization': f"Bearer {os.environ.get('WARHAMMER_API_KEY	')}"}
 
     try:
         response = requests.get(api_url, headers=headers)
