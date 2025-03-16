@@ -18,10 +18,26 @@ def player_details():
 
     response = requests.get(api_url, headers=headers)
 
-    if response.status_code == 200:
-        return jsonify(response.json())
-    else:
-        return jsonify({"error": response.status_code, "details": response.text}), response.status_code
+   if response.status_code == 200:
+            data = response.json()
+
+            # Pick interesting details to display clearly
+            player_info = {
+                'username': data.get('username'),
+                'rank': data.get('rank'),
+                'level': data.get('level'),
+                'xp': data.get('xp'),
+                'guild': data.get('guild', {}).get('name', 'No Guild'),
+                'power': data.get('power')
+            }
+
+            return jsonify(player_info)
+        else:
+            # Clearly inform of API errors
+            return jsonify({
+                'error': f'API Error: {response.status_code}',
+                'message': response.json()
+            }), response.status_code
 
 
 if __name__ == "__main__":
