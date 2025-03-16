@@ -12,32 +12,37 @@ def home():
 def player_details():
     api_url = 'https://api.tacticusgame.com/api/v1/player'
     headers = {
-        'accept': 'application/json',
-        'X-API-KEY': os.environ.get('WARHAMMER_API_KEY')
+        'X-API-KEY': os.environ.get('WARHAMMER_API_KEY'),
+        'accept': 'application/json'
     }
 
     response = requests.get(api_url, headers=headers)
 
-   if response.status_code == 200:
-            data = response.json()
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({"error": response.status_code, "details": response.text}), response.status_code
 
-            # Pick interesting details to display clearly
-            player_info = {
-                'username': data.get('username'),
-                'rank': data.get('rank'),
-                'level': data.get('level'),
-                'xp': data.get('xp'),
-                'guild': data.get('guild', {}).get('name', 'No Guild'),
-                'power': data.get('power')
-            }
+@app.route('/api/player/details')
+def player_details():
+    api_url = 'https://api.tacticusgame.com/api/v1/player'
+    headers = {
+        'X-API-KEY': os.environ.get('WARHAMMER_API_KEY'),
+        'accept': 'application/json'
+    }
 
-            return jsonify(player_info)
-        else:
-            # Clearly inform of API errors
-            return jsonify({
-                'error': f'API Error: {response.status_code}',
-                'message': response.json()
-            }), response.status_code
+    response = requests.get(api_url, headers=headers)
+
+    if response.status_code == 200:
+        
+        player_info = {
+            'Name': response.player.details.name,
+            'Level': response.player.details.name
+        }            
+
+        return jsonify(response.json())
+    else:
+        return jsonify({"error": response.status_code, "details": response.text}), response.status_code
 
 
 if __name__ == "__main__":
